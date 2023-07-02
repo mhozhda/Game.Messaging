@@ -1,6 +1,7 @@
 ﻿using Game.Messaging.Server.Application.Exceptions;
 using Game.Messaging.Server.Entities;
 using Game.Messaging.Server.Infrastructure.Persistance;
+using Game.Messaging.Server.Infrastructure.UserNotifications;
 using MediatR;
 
 namespace Game.Messaging.Server.Application.GameOffers.Commands
@@ -13,15 +14,18 @@ namespace Game.Messaging.Server.Application.GameOffers.Commands
 			public DateTime StartsAt { get; init; }
 			public DateTime ExpiresAt { get; init; }
 			public int OfferType { get; init; }
+			public string Team { get; set; }
 		}
 
 		class Handler : IRequestHandler<Command>
 		{
 			private readonly IRepository<GameOffer> _gameOffersRepository;
+			private readonly IUserNotificationService _userNotificationService;
 
-			public Handler(IRepository<GameOffer> gameOffersRepository)
+			public Handler(IRepository<GameOffer> gameOffersRepository, IUserNotificationService userNotificationService)
 			{
 				_gameOffersRepository = gameOffersRepository;
+				_userNotificationService = userNotificationService;
 			}
 
 			public async Task Handle(Command request, CancellationToken cancellationToken)
@@ -40,6 +44,8 @@ namespace Game.Messaging.Server.Application.GameOffers.Commands
 				};
 
 				await _gameOffersRepository.AddAsync(gameOffer);
+
+				await _userNotificationService.SendGameOfferToTeamAsync(gameOffer, request.Team);
 			}
 		}
 	}
