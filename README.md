@@ -1,7 +1,7 @@
 
 # Game.Messaging
 
-Required feature may be implemented using different approches. The most widely used are **Websockets** and **Push Notifications**. Websockets is more about real time two way communication and Push Notifications is more about delivering messages event for clients that are not currently connected. Also Push Notifications need external notifications provider like Firebase.
+Required feature may be implemented using different approches. The most widely used are **Websockets** and **Push Notifications**. Websockets is more about real time two way communication and Push Notifications is more about delivering messages even for clients that are not currently connected. Also Push Notifications need external notifications provider like Firebase.
 
 From task description it looks like only connected clients should receive notifications, so we can use Websockets to implement required feature.
 
