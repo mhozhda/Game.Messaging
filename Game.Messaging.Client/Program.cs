@@ -33,12 +33,12 @@ try
 		.WithUrl(apiUrl)
 		.Build();
 
-	connection.On<GameOffer>("New Offer Added", offer =>
+	connection.On<GameOffer>("NewOfferAdded", offer =>
 	{
 		Console.WriteLine($"New Offer: {offer}");
 	});
 
-	connection.On<GameEvent>("New Event Added", @event =>
+	connection.On<GameEvent>("NewEventAdded", @event =>
 	{
 		Console.WriteLine($"New Event:{@event}");
 	});
